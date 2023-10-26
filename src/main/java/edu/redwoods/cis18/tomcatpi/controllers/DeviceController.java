@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,20 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         d.setColor(colorRequest);
         return ResponseEntity.ok(d);
     }
-
+// example http://yourserver/contextPath/setvars?deviceName=stringValue&gpioNum=18&brightness=255&pixels=99
     @PutMapping(value = "/setvars", produces = "application/json")
-    public ResponseEntity<Device> setVars(@RequestParam String deviceName, int gpioNum, int brightness, int pixels) {
+    public ResponseEntity<Device> setVars(
+            @RequestParam String deviceName,
+            @RequestParam int gpioNum,
+            @RequestParam int brightness,
+            @RequestParam int pixels ) {
         try {
+            if (brightness < 0 || brightness > 255) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            if (pixels <= 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             d.setDeviceName(deviceName);
             d.setGpioNum(gpioNum);
             d.setBrightness(brightness);

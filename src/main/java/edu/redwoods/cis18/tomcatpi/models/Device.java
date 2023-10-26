@@ -76,6 +76,7 @@ public class Device {
     }
 
     public void christmasColors() throws Throwable {
+        // System.out.println("Functional");
         if (ledDriver!= null){
             for (int i = 0; i < ledDriver.getNumPixels(); i++) {
                 switch (i % 3) {
