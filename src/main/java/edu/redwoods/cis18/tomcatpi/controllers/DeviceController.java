@@ -25,6 +25,18 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         return ResponseEntity.ok(d);
     }
 
+    @PutMapping(value = "/setvars", produces = "application/json")
+    public ResponseEntity<Device> setVars(@RequestParam String deviceName, int gpioNum, int brightness, int pixels) {
+        try {
+            d.setDeviceName(deviceName);
+            d.setGpioNum(gpioNum);
+            d.setBrightness(brightness);
+            d.setPixels(pixels);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } return ResponseEntity.ok(d);
+    }
+
     @GetMapping(value = "/rainbow", produces = "application/json")
     public ResponseEntity<Device> rainbow() {
         try {
@@ -34,6 +46,16 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         }
         return ResponseEntity.ok(d);
     }
+    @GetMapping(value = "/christmas", produces = "application/json")
+    public ResponseEntity<Device> christmasColors() {
+        try {
+            d.christmasColors();
+        } catch(Throwable t) {
+            d.setState(t.getMessage());
+        }
+        return ResponseEntity.ok(d);
+    }
+
 
     @GetMapping(value = "/animations", produces = "application/json")
     public ResponseEntity<Device> animations() {

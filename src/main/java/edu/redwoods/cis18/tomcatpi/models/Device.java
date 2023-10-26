@@ -14,11 +14,11 @@ public class Device {
     @JsonProperty("deviceName")
     private String deviceName;
     @JsonProperty("gpioNum")
-    private final int gpioNum;
+    private int gpioNum;
     @JsonProperty("brightness")
     private int brightness;
     @JsonProperty("pixels")
-    private final int pixels;
+    private int pixels;
 
     // @TODO: Make this state part of an ENUM of possible states rather than a string.
     @JsonProperty("state")
@@ -35,6 +35,19 @@ public class Device {
         this.brightness = brightness;
         this.pixels = pixels;
         ledDriver = getLedDriver();
+    }
+
+    public void setPixels(int pixels){
+        this.pixels = pixels;
+    }
+    public void setDeviceName(String deviceName){
+        this.deviceName = deviceName;
+    }
+    public void setGpioNum(int gpioNum){
+        this.gpioNum = gpioNum;
+    }
+    public void setBrightness(int brightness){
+        this.brightness = brightness;
     }
 
     public LedDriverInterface getLedDriver() {
@@ -59,6 +72,26 @@ public class Device {
                 ledDriver.setPixelColour(pixel, color.getHexInt());
             }
             ledDriver.render();
+        }
+    }
+
+    public void christmasColors() throws Throwable {
+        if (ledDriver!= null){
+            for (int i = 0; i < ledDriver.getNumPixels(); i++) {
+                switch (i % 3) {
+                    case 0:
+                        ledDriver.setPixelColour(i, PixelColour.GREEN);
+                        break;
+                    case 1:
+                        ledDriver.setPixelColourRGB(i, 255,255,255);
+                        break;
+                    case 2:
+                        ledDriver.setPixelColour(i, PixelColour.RED);
+                        break;
+                }
+                ledDriver.render();
+                PixelAnimations.delay(10);
+            }
         }
     }
 
