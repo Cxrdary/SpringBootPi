@@ -77,22 +77,48 @@ public class Device {
 
     public void christmasColors() throws Throwable {
         // System.out.println("Functional");
-        if (ledDriver!= null){
-            for (int i = 0; i < ledDriver.getNumPixels(); i++) {
-                switch (i % 3) {
-                    case 0:
-                        ledDriver.setPixelColour(i, PixelColour.GREEN);
-                        break;
-                    case 1:
-                        ledDriver.setPixelColourRGB(i, 255,255,255);
-                        break;
-                    case 2:
-                        ledDriver.setPixelColour(i, PixelColour.RED);
-                        break;
+        if (ledDriver!= null) {
+            for (int j = 0; j < 15; j++) {
+                boolean invertSwitch = true;
+                if (invertSwitch) {
+                for (int i = 0; i < ledDriver.getNumPixels(); i++) {
+                        switch (i % 3) {
+                            case 0:
+                                ledDriver.setPixelColour(i, PixelColour.GREEN);
+                                break;
+                            case 1:
+                                ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                                break;
+                            case 2:
+                                ledDriver.setPixelColour(i, PixelColour.RED);
+                                break;
+                        }
+                        ledDriver.render();
+                        PixelAnimations.delay(50);
+                    }
+                    Thread.sleep(10);
+                    invertSwitch = false;
+                } if (!invertSwitch) {
+                    for (int i = 0; i < ledDriver.getNumPixels(); i++) {
+                        switch (i % 3) {
+                            case 1:
+                                ledDriver.setPixelColour(i, PixelColour.GREEN);
+                                break;
+                            case 0:
+                                ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                                break;
+                            case 2:
+                                ledDriver.setPixelColour(i, PixelColour.RED);
+                                break;
+                        }
+                        ledDriver.render();
+                        PixelAnimations.delay(50);
+                    }
+                    Thread.sleep(10);
+                    invertSwitch = true;
                 }
-                ledDriver.render();
-                PixelAnimations.delay(10);
             }
+            ledDriver.allOff();
         }
     }
 
