@@ -90,7 +90,7 @@ public class Device {
                             ledDriver.setPixelColour(i, PixelColour.GREEN);
                             break;
                         case 1:
-                            ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                            ledDriver.setPixelColourRGB(i, 100, 100, 100);
                             break;
                         case 2:
                             ledDriver.setPixelColour(i, PixelColour.RED);
@@ -106,7 +106,7 @@ public class Device {
                                 ledDriver.setPixelColour(randomPixel, PixelColour.GREEN);
                                 break;
                             case 1:
-                                ledDriver.setPixelColourRGB(randomPixel, 255, 255, 255);
+                                ledDriver.setPixelColourRGB(randomPixel, 100, 100, 100);
                                 break;
                             case 2:
                                 ledDriver.setPixelColour(randomPixel, PixelColour.RED);
@@ -125,7 +125,7 @@ public class Device {
                             ledDriver.setPixelColour(i, PixelColour.GREEN);
                             break;
                         case 0:
-                            ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                            ledDriver.setPixelColourRGB(i, 100, 100, 100);
                             break;
                         case 1:
                             ledDriver.setPixelColour(i, PixelColour.RED);
@@ -141,7 +141,7 @@ public class Device {
                                 ledDriver.setPixelColour(randomPixel, PixelColour.GREEN);
                                 break;
                             case 1:
-                                ledDriver.setPixelColourRGB(randomPixel, 255, 255, 255);
+                                ledDriver.setPixelColourRGB(randomPixel, 100, 100, 100);
                                 break;
                             case 2:
                                 ledDriver.setPixelColour(randomPixel, PixelColour.RED);
@@ -170,7 +170,7 @@ public class Device {
                             ledDriver.setPixelColour(i, PixelColour.GREEN);
                             break;
                         case 1:
-                            ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                            ledDriver.setPixelColourRGB(i, 100, 100, 100);
                             break;
                         case 2:
                             ledDriver.setPixelColour(i, PixelColour.RED);
@@ -187,7 +187,7 @@ public class Device {
                             ledDriver.setPixelColour(i, PixelColour.GREEN);
                             break;
                         case 0:
-                            ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                            ledDriver.setPixelColourRGB(i, 100, 100, 100);
                             break;
                         case 1:
                             ledDriver.setPixelColour(i, PixelColour.RED);
