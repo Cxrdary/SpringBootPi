@@ -66,6 +66,15 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         }
         return ResponseEntity.ok(d);
     }
+    @GetMapping(value = "/christmastwinkle", produces = "application/json")
+    public ResponseEntity<Device> christmasColorsTwinkle() {
+        try {
+            d.christmasColorsTwinkle();
+        } catch(Throwable t) {
+            d.setState(t.getMessage());
+        }
+        return ResponseEntity.ok(d);
+    }
 
 
     @GetMapping(value = "/animations", produces = "application/json")
