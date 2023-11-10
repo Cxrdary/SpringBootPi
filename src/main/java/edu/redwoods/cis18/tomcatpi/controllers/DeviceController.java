@@ -20,9 +20,9 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
     private Device d;
 
     @PostMapping(value = "/set/color", produces = "application/json")
-    public ResponseEntity<Device> setColor(@RequestBody DeviceColor colorRequest) {
+    public ResponseEntity<Device> setColor(@RequestParam int r, @RequestParam int g, @RequestParam int b) {
         logger.debug("DeviceController setColor called.");
-        d.setColor(colorRequest);
+        d.setColor(r,g,b);
         return ResponseEntity.ok(d);
     }
 // example http://yourserver/contextPath/setvars?deviceName=stringValue&gpioNum=18&brightness=255&pixels=99

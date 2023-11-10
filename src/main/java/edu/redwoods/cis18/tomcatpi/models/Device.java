@@ -65,18 +65,21 @@ public class Device {
         return ledDriver;
     }
 
-    public void setColor(DeviceColor color) {
-        logger.debug(String.format("Setting color to: %d %d %d%nHex: %s%n",
-                color.getRed(), color.getGreen(), color.getBlue(), color.getHexString())
-        );
-        if(ledDriver != null) { // No point in trying to manipulate the physical device if it was never loaded.
+    public void setColor(int r, int g, int b) {
+        if(ledDriver != null) {
+            if (isValidRGB(r,g,b)) {
             for (int pixel = 0; pixel < ledDriver.getNumPixels(); pixel++) {
-                ledDriver.setPixelColour(pixel, color.getHexInt());
+                ledDriver.setPixelColourRGB(pixel, r, g, b);
             }
             ledDriver.render();
+            } else {
+                System.out.println("Error values must be within 1, 255");
+            }
         }
     }
-
+public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
+      return colorVal1 >= 0 && colorVal1 <= 255 && colorVal2 >= 0 && colorVal2 <= 255 && colorVal3 >= 0 && colorVal3 <= 255;
+}
 
     public void christmasColorsTwinkle() throws Throwable {
         animationRunning = true;
