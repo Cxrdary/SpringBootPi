@@ -10,6 +10,11 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.core.io.FileSystemResource;
+
 
 @CrossOrigin(origins = "*") // Allow requests from any origin
 @RestController
@@ -18,6 +23,21 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
     private static final Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
     private Device d;
+    @GetMapping("/index")
+    public ResponseEntity<String> getIndexPage() {
+        try {
+            Resource resource = new ClassPathResource("static/index.html");
+            if (resource.exists()) {
+                byte[] htmlBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+                String htmlContent = new String(htmlBytes);
+                return ResponseEntity.ok(htmlContent);
+            } else {
+                return new ResponseEntity<>("Index.html not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping(value = "/set/color", produces = "application/json")
     public ResponseEntity<Device> setColor(@RequestParam int r, @RequestParam int g, @RequestParam int b) {
