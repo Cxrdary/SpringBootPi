@@ -38,19 +38,6 @@ public class Device {
         ledDriver = getLedDriver();
     }
 
-    public void setPixels(int pixels){
-        this.pixels = pixels;
-    }
-    public void setDeviceName(String deviceName){
-        this.deviceName = deviceName;
-    }
-    public void setGpioNum(int gpioNum){
-        this.gpioNum = gpioNum;
-    }
-    public void setBrightness(int brightness){
-        this.brightness = brightness;
-    }
-
     public LedDriverInterface getLedDriver() {
         if(ledDriver == null) {
             try {
