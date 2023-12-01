@@ -181,6 +181,42 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
             ledDriver.allOff();
         }
     }
+    public void candyCane(){
+        animationRunning = true;
+        for (int i = 0; i < ledDriver.getNumPixels(); i++){
+            switch (i % 5){
+                case 0:
+                    ledDriver.setPixelColourRGB(i, 255, 0, 0);
+                    break;
+                case 1:
+                    ledDriver.setPixelColourRGB(i, 255, 0, 0);
+                    break;
+                case 2:
+                    ledDriver.setPixelColourRGB(i, 255, 0, 0);
+                    break;
+                case 3:
+                    ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                    break;
+                case 4:
+                    ledDriver.setPixelColourRGB(i, 255, 255, 255);
+                    break;
+            }
+            ledDriver.render();
+            PixelAnimations.delay(5);
+        }
+        while(animationRunning) {
+            for (int i = 0; i < ledDriver.getNumPixels(); i++) {
+                int initColorR = ledDriver.getRedComponent(i);
+                int initColorG = ledDriver.getGreenComponent(i);
+                int initColorB = ledDriver.getBlueComponent(i);
+                ledDriver.setPixelColourRGB(i, 255, 255, 0);
+                ledDriver.render();
+                PixelAnimations.delay(100);
+                ledDriver.setPixelColourRGB(i, initColorR, initColorG, initColorB);
+            }
+        }
+        ledDriver.allOff();
+    }
 
     @Override
     public String toString() {

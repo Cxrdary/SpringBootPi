@@ -53,6 +53,15 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         }
         return ResponseEntity.ok(d);
     }
+    @GetMapping(value = "/candyCane", produces = "application/json")
+    public ResponseEntity<Device> candyCane() {
+        try {
+            d.candyCane();
+        } catch(Throwable t) {
+            d.setState(t.getMessage());
+        }
+        return ResponseEntity.ok(d);
+    }
     @GetMapping(value = "/chaseRainbow", produces = "application/json")
     public ResponseEntity<Device> ledAnimate() {
         try {
