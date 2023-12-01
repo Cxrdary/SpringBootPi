@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background: linear-gradient(
+        0deg,
+        rgba(238, 236, 152, 1) 0%,
+        rgba(184, 238, 152, 1) 33%,
+        rgba(238, 152, 205, 1) 66%,
+        rgba(152, 225, 238) 100%
+    );
+            }
+            * {
+                margin: 0;
+                padding: 1em;
+            }
+            h2 {
+                padding-left: 1em;
+                margin-bottom: 3vh;
+            }
+            div + div {
+                margin-bottom: 10px;
+            }
+            a {
+                font: bold 18px Arial;
+                text-decoration: none;
+                background-color: #EEEEEE;
+                color: #333333;
+                padding: 2px 6px 2px 6px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 1px solid #333333;
+                border-bottom: 1px solid #333333;
+                border-left: 1px solid #CCCCCC;
+            }
+        </style>
+        <script>
+            
+            function GET_alloff() {
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/alloff`);
+            }
+            function GET_animations() {
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/animations`);
+            }
+            function GET_christmas() {
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/christmas`);
+            }
+            function GET_rainbow() {
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/rainbow`);
+            }
+            function GET_chaseRainbow() {
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/chaseRainbow`);
+            }
+
+
+            function POST_set_color() {
+                let pcr = parseInt(document.getElementById("post_color:r").value);
+                let pcg = parseInt(document.getElementById("post_color:g").value);
+                let pcb = parseInt(document.getElementById("post_color:b").value);
+
+                pcr = Math.round(Math.min(Math.max(pcr,0),255));
+                pcg = Math.round(Math.min(Math.max(pcg,0),255));
+                pcb = Math.round(Math.min(Math.max(pcb,0),255));
+
+                pcr = pcr==NaN?0:pcr;
+                pcg = pcg==NaN?0:pcg;
+                pcb = pcb==NaN?0:pcb;
+
+                let fullUrl = window.location.href;
+                let parsedUrl = fullUrl.split('/',3).join('/');
+                fetch(`${parsedUrl}/device/set/color?r=${pcr}&g=${pcg}&b=${pcb}`,{
+                    method: "POST",
+                    body: "{}",
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <noscript>
+            <h1 style="color:red;background-color: black;">This interface requires JavaScript to be enabled.</h1>
+        </noscript>
+        <div></div>
+        
+        <div class="group" style="background-color: rgb(238, 152, 205)">
+            <div>
+                <h2>Presets</h2>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="GET_alloff();">All Off</a>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="GET_animations();">Animations</a>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="GET_christmas();">Christmas</a>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="GET_rainbow();">Rainbow</a>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="GET_chaseRainbow();">Chase the Rainbow</a>
+            </div>
+        </div>
+        
+        <div class="group" style="background-color: rgb(152, 225, 238)">
+            <div>
+                <h2>Set Color</h2>
+            </div>
+            <div>
+                <label>Red: </label>
+                <input type="number" min="0" max="255" step="1" id="post_color:r"/>
+            </div>
+            <div>
+                <label>Green: </label>
+                <input type="number" min="0" max="255" step="1" id="post_color:g"/>
+            </div>
+            <div>
+                <label>Blue: </label>
+                <input type="number" min="0" max="255" step="1" id="post_color:b"/>
+            </div>
+            <div>
+                <a id='button' href="javascript:void(0)" onclick="POST_set_color();">Send Color</a>
+            </div>
+        </div>
+    </body>
+</html>

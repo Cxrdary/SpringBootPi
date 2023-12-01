@@ -1,6 +1,5 @@
 package edu.redwoods.cis18.tomcatpi.controllers;
 
-import edu.redwoods.cis18.tomcatpi.models.DeviceColor;
 import edu.redwoods.cis18.tomcatpi.models.Device;
 // Spring imports
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.core.io.FileSystemResource;
 
 
 @CrossOrigin(origins = "*") // Allow requests from any origin
@@ -45,28 +43,6 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         d.setColor(r,g,b);
         return ResponseEntity.ok(d);
     }
-// example http://yourserver/contextPath/setvars?deviceName=stringValue&gpioNum=18&brightness=255&pixels=99
-    @PutMapping(value = "/setvars", produces = "application/json")
-    public ResponseEntity<Device> setVars(
-            @RequestParam String deviceName,
-            @RequestParam int gpioNum,
-            @RequestParam int brightness,
-            @RequestParam int pixels ) {
-        try {
-            if (brightness < 0 || brightness > 255) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            if (pixels <= 0) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            d.setDeviceName(deviceName);
-            d.setGpioNum(gpioNum);
-            d.setBrightness(brightness);
-            d.setPixels(pixels);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } return ResponseEntity.ok(d);
-    }
 
     @GetMapping(value = "/rainbow", produces = "application/json")
     public ResponseEntity<Device> rainbow() {
@@ -77,19 +53,31 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
         }
         return ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/christmas", produces = "application/json")
-    public ResponseEntity<Device> christmasColors() {
+    @GetMapping(value = "/chaseRainbow", produces = "application/json")
+    public ResponseEntity<Device> ledAnimate() {
         try {
+            d.ledAnimate();
+        } catch(Throwable t) {
+            d.setState(t.getMessage());
+        }
+        return ResponseEntity.ok(d);
+    }
+    @GetMapping(value = "/seizureMode", produces = "application/json")
+    public ResponseEntity<Device> seizureMode() {
+        try {
+            d.ledAnimate();
+            d.rainbowColors();
+            d.animations();
             d.christmasColors();
         } catch(Throwable t) {
             d.setState(t.getMessage());
         }
         return ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/christmastwinkle", produces = "application/json")
-    public ResponseEntity<Device> christmasColorsTwinkle() {
+    @GetMapping(value = "/christmas", produces = "application/json")
+    public ResponseEntity<Device> christmasColors() {
         try {
-            d.christmasColorsTwinkle();
+            d.christmasColors();
         } catch(Throwable t) {
             d.setState(t.getMessage());
         }
@@ -120,6 +108,6 @@ public class DeviceController implements ApplicationListener<ApplicationReadyEve
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         logger.debug("Creating device since the application is ready.");
-        d = new Device("PiZero", 18, 255, 99);
+        d = new Device("PiZero", 18, 255, 60);
     }
 }

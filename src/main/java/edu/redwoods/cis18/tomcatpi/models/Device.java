@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 // Logging imports
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Random;
 
 public class Device {
     private boolean animationRunning = false;
@@ -64,6 +63,34 @@ public class Device {
         }
         return ledDriver;
     }
+    public void ledAnimate(){
+        theatreChaseRainbow(ledDriver, 40);
+    }
+
+    public void theatreChaseRainbow(LedDriverInterface var0, int var1) {
+        animationRunning = true;
+        for(int var2 = 0; var2 < 256; ++var2) {
+            if (animationRunning) {
+                for (int var3 = 0; var3 < 3; ++var3) {
+                    if (animationRunning) {
+                        int var4;
+                        for (var4 = 0; var4 < var0.getNumPixels(); var4 += 3) {
+                            var0.setPixelColour(var4 + var3, PixelColour.wheel((var4 + var2) % 255));
+                        }
+
+                        var0.render();
+                        PixelAnimations.delay(var1);
+
+                        for (var4 = 0; var4 < var0.getNumPixels(); var4 += 3) {
+                            var0.setPixelColour(var4 + var3, 0);
+                        }
+                    }
+                }
+            }
+        }
+        ledDriver.allOff();
+    }
+
 
     public void setColor(int r, int g, int b) {
         if(ledDriver != null) {
@@ -81,90 +108,6 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
       return colorVal1 >= 0 && colorVal1 <= 255 && colorVal2 >= 0 && colorVal2 <= 255 && colorVal3 >= 0 && colorVal3 <= 255;
 }
 
-    public void christmasColorsTwinkle() throws Throwable {
-        animationRunning = true;
-        if (ledDriver != null) {
-            Random random = new Random();
-
-            for (int j = 0; j < 16; j++) { // Change 16 to the desired number of loops
-                if (animationRunning) {
-                    // Loop from the beginning to the end
-                    for (int i = 0; i < ledDriver.getNumPixels(); i++) {
-                        switch (i % 3) {
-                            case 0:
-                                ledDriver.setPixelColour(i, PixelColour.GREEN);
-                                break;
-                            case 1:
-                                ledDriver.setPixelColourRGB(i, 100, 100, 100);
-                                break;
-                            case 2:
-                                ledDriver.setPixelColour(i, PixelColour.RED);
-                                break;
-                        }
-
-                        // Simulate twinkling by changing the color of a random pixel
-                        if (random.nextDouble() < 0.05) { // Adjust the probability as needed
-                            int randomPixel = random.nextInt(ledDriver.getNumPixels());
-                            int randomColor = random.nextInt(3);
-                            switch (randomColor) {
-                                case 0:
-                                    ledDriver.setPixelColour(randomPixel, PixelColour.GREEN);
-                                    break;
-                                case 1:
-                                    ledDriver.setPixelColourRGB(randomPixel, 100, 100, 100);
-                                    break;
-                                case 2:
-                                    ledDriver.setPixelColour(randomPixel, PixelColour.RED);
-                                    break;
-                            }
-                        }
-
-                        ledDriver.render();
-                        PixelAnimations.delay(20);
-                    }
-
-                    // Loop from the end to the beginning
-                    for (int i = ledDriver.getNumPixels() - 1; i >= 0; i--) {
-                        switch (i % 3) {
-                            case 2:
-                                ledDriver.setPixelColour(i, PixelColour.GREEN);
-                                break;
-                            case 0:
-                                ledDriver.setPixelColourRGB(i, 100, 100, 100);
-                                break;
-                            case 1:
-                                ledDriver.setPixelColour(i, PixelColour.RED);
-                                break;
-                        }
-
-                        // Simulate twinkling by changing the color of a random pixel
-                        if (random.nextDouble() < 0.05) { // Adjust the probability as needed
-                            int randomPixel = random.nextInt(ledDriver.getNumPixels());
-                            int randomColor = random.nextInt(3);
-                            switch (randomColor) {
-                                case 0:
-                                    ledDriver.setPixelColour(randomPixel, PixelColour.GREEN);
-                                    break;
-                                case 1:
-                                    ledDriver.setPixelColourRGB(randomPixel, 100, 100, 100);
-                                    break;
-                                case 2:
-                                    ledDriver.setPixelColour(randomPixel, PixelColour.RED);
-                                    break;
-                            }
-                        }
-
-                        ledDriver.render();
-                        PixelAnimations.delay(20);
-                    }
-                }
-            }
-
-            ledDriver.allOff();
-        }
-    }
-
-
     public void christmasColors() throws Throwable {
         animationRunning = true;
         if (ledDriver != null) {
@@ -172,37 +115,42 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
                 if (animationRunning) {
                     // Loop from the beginning to the end
                     for (int i = 0; i < ledDriver.getNumPixels(); i++) {
-                        switch (i % 3) {
-                            case 0:
-                                ledDriver.setPixelColour(i, PixelColour.GREEN);
-                                break;
-                            case 1:
-                                ledDriver.setPixelColourRGB(i, 100, 100, 100);
-                                break;
-                            case 2:
-                                ledDriver.setPixelColour(i, PixelColour.RED);
-                                break;
+                        if (animationRunning) {
+                            switch (i % 3) {
+                                case 0:
+                                    ledDriver.setPixelColour(i, PixelColour.GREEN);
+                                    break;
+                                case 1:
+                                    ledDriver.setPixelColourRGB(i, 100, 100, 100);
+                                    break;
+                                case 2:
+                                    ledDriver.setPixelColour(i, PixelColour.RED);
+                                    break;
+                            }
                         }
                         ledDriver.render();
-                        PixelAnimations.delay(20);
+                        PixelAnimations.delay(3);
                     }
 
                     // Loop from the end to the beginning
                     for (int i = ledDriver.getNumPixels() - 1; i >= 0; i--) {
-                        switch (i % 3) {
-                            case 2:
-                                ledDriver.setPixelColour(i, PixelColour.GREEN);
-                                break;
-                            case 0:
-                                ledDriver.setPixelColourRGB(i, 100, 100, 100);
-                                break;
-                            case 1:
-                                ledDriver.setPixelColour(i, PixelColour.RED);
-                                break;
+                        if (animationRunning) {
+                            switch (i % 3) {
+                                case 2:
+                                    ledDriver.setPixelColour(i, PixelColour.GREEN);
+                                    break;
+                                case 0:
+                                    ledDriver.setPixelColourRGB(i, 100, 100, 100);
+                                    break;
+                                case 1:
+                                    ledDriver.setPixelColour(i, PixelColour.RED);
+                                    break;
+                            }
                         }
                         ledDriver.render();
-                        PixelAnimations.delay(20);
+                        PixelAnimations.delay(3);
                     }
+
                 }
             }
             ledDriver.allOff();
@@ -218,7 +166,9 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
             for (int i = 0; i < 250; i++) {
                 if (animationRunning) {
                     for (int pixel = 0; pixel < ledDriver.getNumPixels(); pixel++) {
-                        ledDriver.setPixelColour(pixel, colors[(i + pixel) % colors.length]);
+                        if (animationRunning) {
+                            ledDriver.setPixelColour(pixel, colors[(i + pixel) % colors.length]);
+                        }
                     }
                     ledDriver.render();
                     PixelAnimations.delay(50);
