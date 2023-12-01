@@ -98,8 +98,7 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
     public void christmasColors() throws Throwable {
         animationRunning = true;
         if (ledDriver != null) {
-            for (int j = 0; j < 16; j++) { // Change 16 to the desired number of loops
-                if (animationRunning) {
+            while(animationRunning){
                     // Loop from the beginning to the end
                     for (int i = 0; i < ledDriver.getNumPixels(); i++) {
                         if (animationRunning) {
@@ -114,9 +113,10 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
                                     ledDriver.setPixelColour(i, PixelColour.RED);
                                     break;
                             }
+                            ledDriver.render();
+                            PixelAnimations.delay(5);
                         }
-                        ledDriver.render();
-                        PixelAnimations.delay(3);
+
                     }
 
                     // Loop from the end to the beginning
@@ -133,16 +133,16 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
                                     ledDriver.setPixelColour(i, PixelColour.RED);
                                     break;
                             }
+                            ledDriver.render();
+                            PixelAnimations.delay(5);
                         }
-                        ledDriver.render();
-                        PixelAnimations.delay(3);
+
                     }
 
                 }
             }
-            ledDriver.allOff();
         }
-    }
+
 
 
     public void rainbowColors() throws Throwable {
@@ -206,13 +206,15 @@ public boolean isValidRGB(int colorVal1, int colorVal2, int colorVal3){
         }
         while(animationRunning) {
             for (int i = 0; i < ledDriver.getNumPixels(); i++) {
-                int initColorR = ledDriver.getRedComponent(i);
-                int initColorG = ledDriver.getGreenComponent(i);
-                int initColorB = ledDriver.getBlueComponent(i);
-                ledDriver.setPixelColourRGB(i, 255, 255, 0);
-                ledDriver.render();
-                PixelAnimations.delay(100);
-                ledDriver.setPixelColourRGB(i, initColorR, initColorG, initColorB);
+                if (animationRunning) {
+                    int initColorR = ledDriver.getRedComponent(i);
+                    int initColorG = ledDriver.getGreenComponent(i);
+                    int initColorB = ledDriver.getBlueComponent(i);
+                    ledDriver.setPixelColourRGB(i, 255, 255, 0);
+                    ledDriver.render();
+                    PixelAnimations.delay(75);
+                    ledDriver.setPixelColourRGB(i, initColorR, initColorG, initColorB);
+                }
             }
         }
         ledDriver.allOff();

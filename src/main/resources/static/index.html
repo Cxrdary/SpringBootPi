@@ -41,29 +41,34 @@
                 let parsedUrl = fullUrl.split('/',3).join('/');
                 fetch(`${parsedUrl}/device/alloff`);
             }
-            function GET_animations() {
+            async function GET_animations() {
                 let fullUrl = window.location.href;
                 let parsedUrl = fullUrl.split('/',3).join('/');
+                await fetch(`${parsedUrl}/device/alloff`);
                 fetch(`${parsedUrl}/device/animations`);
             }
-            function GET_christmas() {
+            async function GET_christmas() {
                 let fullUrl = window.location.href;
                 let parsedUrl = fullUrl.split('/',3).join('/');
+                await fetch(`${parsedUrl}/device/alloff`);
                 fetch(`${parsedUrl}/device/christmas`);
             }
-            function GET_rainbow() {
+            async function GET_rainbow() {
                 let fullUrl = window.location.href;
                 let parsedUrl = fullUrl.split('/',3).join('/');
+                await fetch(`${parsedUrl}/device/alloff`);
                 fetch(`${parsedUrl}/device/rainbow`);
             }
-            function GET_chaseRainbow() {
+            async function GET_chaseRainbow() {
                 let fullUrl = window.location.href;
                 let parsedUrl = fullUrl.split('/',3).join('/');
+                await fetch(`${parsedUrl}/device/alloff`);
                 fetch(`${parsedUrl}/device/chaseRainbow`);
             }
-            function GET_candyCane() {
+            async function GET_candyCane() {
                 let fullUrl = window.location.href;
                 let parsedUrl = fullUrl.split('/',3).join('/');
+                await fetch(`${parsedUrl}/device/alloff`);
                 fetch(`${parsedUrl}/device/candyCane`);
             }
 
